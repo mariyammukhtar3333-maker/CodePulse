@@ -1,60 +1,46 @@
-# CodePulse — Software House Website & Management Portal (Frontend Prototype)
+# CodePulse — Week 4 Backend & API Integration
 
-A responsive HTML, CSS and vanilla JavaScript starter project for a software-house public website and internal management portal.
+A multi-page HTML/CSS/vanilla JavaScript software-house website prototype with a Node.js + Express API.
 
-## Run the project
-1. Extract `CodePulse.zip`.
-2. Open the `CodePulse` folder in VS Code.
-3. Open `index.html` in a browser, or use the VS Code Live Server extension.
-4. Select **Team Login**.
-5. Choose a demo role, enter an email such as `owner@codepulse.example`, and a demo password of at least 6 characters.
-6. Click **First time? Set up demo account**, then click **Continue to portal**.
+## What's included
+- Shared light/dark theme preference across public pages and portal pages.
+- Light palette: pastel pink/purple. Dark palette: black/gold.
+- Leadership and team profile sections (illustrative sample people/photos).
+- Contact form connected to `POST /api/contact`.
+- Live product cards loaded from DummyJSON through `GET /api/products`.
+- API health endpoint: `GET /api/health`.
+- Express, CORS, Helmet and basic API rate limiting.
+- `.env.example` and `.gitignore`.
 
-The demo account is saved only in this browser. Set up separate demo accounts for the roles you want to test. Use fake details and never use a real password.
+## Run the backend
+1. Install Node.js (LTS or newer).
+2. Open a terminal in the `backend` folder.
+3. Run `npm install`.
+4. Copy `.env.example` to `.env`.
+5. Run `npm run dev` (or `npm start`).
+6. Keep this terminal running. The API uses `http://localhost:3000`.
 
-## Included
-- Public landing page, services, about and careers pages
-- Internship/job application form (saved locally in the same browser)
-- Demo login and first-time account setup
-- Role-specific navigation for Owner, Manager, Employee, HR and Finance
-- Owner demo access to all sections
-- Project, task, team, meeting and event records
-- Dashboard metrics, project progress and activity feed
-- Light pink/purple theme and dark black/gold portal theme toggle
-- Responsive layouts and CSS animations
+## Run the website
+Open the project folder in VS Code and use the Live Server extension. The default allowed frontend origin is `http://127.0.0.1:5500`. If Live Server uses another port/origin, update `FRONTEND_ORIGIN` in `backend/.env` and restart the backend.
 
-## Important security limitation
-This is a **frontend-only prototype**, not a secure company management system. `localStorage` and `sessionStorage` are readable and editable by people using the browser. The demo login is not real authentication. Role-based navigation is only a UI demonstration and can be bypassed. Do not store real passwords, employee personal data, salaries, client information, CVs or confidential owner records here.
+## Test endpoints
+- `GET http://localhost:3000/api/health`
+- `GET http://localhost:3000/api/products`
+- `POST http://localhost:3000/api/contact`
 
-Before real company use, build a backend and database. Recommended production architecture:
-- Backend: Node.js + Express (or another maintained server framework)
-- Database: PostgreSQL or MySQL
-- Password hashing: Argon2id or bcrypt with appropriate parameters
-- Sessions: secure, HttpOnly, SameSite cookies; rotate and invalidate sessions
-- Recovery: verified email, single-use time-limited reset tokens
-- Authorization: server-side RBAC and department/project scope checks on every request
-- Owner account: MFA, separate privileged account, recovery controls
-- Audit logs: append-only records for sensitive changes
-- File uploads: server-side validation, access controls and private storage
-- HTTPS, backups, rate limiting, CSRF protection and security testing
-
-## Project structure
-```text
-CodePulse/
-├── index.html
-├── careers.html
-├── login.html
-├── portal.html
-├── css/
-│   ├── style.css
-│   └── portal.css
-├── js/
-│   ├── public.js
-│   ├── careers.js
-│   ├── auth.js
-│   └── portal.js
-└── README.md
+Example JSON body for contact:
+```json
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "phone": "+92 300 1234567",
+  "subject": "Website development",
+  "message": "I would like to discuss a website project."
+}
 ```
 
-## Demo data
-Demo records and application submissions are stored in browser storage on the current device/browser. Clearing site data removes them. Different browsers/devices do not share the records.
+## Important before publishing
+- Phone, email, address, owner bios and team profiles/photos are sample placeholders. Replace them with approved official company details.
+- Contact enquiries are held in server memory only and disappear when the server restarts. Connect a database and notification/email service for production.
+- This is a learning prototype, not a production-secure employee portal. Frontend theme and page visibility do not provide authentication or authorization. Never put real employee, payroll, client or owner-private data here until secure backend login, password hashing, server-side role checks, database access controls and password-reset flows are implemented.
+- Do not commit `.env`, passwords, API secrets or private data to GitHub.
